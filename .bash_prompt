@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Reorders and Colors the PS1 variable (prompt)
+
+RESET="\033[0m"
+WHITE="\033[38;5;15m"
+VIOLET="\033[38;5;5m";
+RED="\033[38;5;1m"
+YELLOW="\033[38;5;11m"
+
+PS1="\[${RESET}\]"
+PS1+="\[${VIOLET}\]\u" # Username
+PS1+="\[${WHITE}\] @ "
+PS1+="\[${RED}\]\h" # Hostname
+PS1+="\[${WHITE}\] : "
+PS1+="\[${YELLOW}\]\w" # Directory
+PS1+="\[${WHITE}\] \\$ " # Permission $/#
+PS1+="\[${RESET}\]"
+
+unset RESET
+unset BOLD
+unset TRANSPARENT
+unset VIOLET
+unset RED
+unset YELLOW
+
+export PS1

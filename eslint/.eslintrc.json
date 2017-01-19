@@ -1,0 +1,17 @@
+{
+  "extends": ["standard"],
+
+  "plugin": [
+    "standard",
+    "promise"
+  ],
+
+  "rules": {
+
+    "standard/object-curly-even-spacing": [2, "either"],
+    "standard/array-bracket-even-spacing": [2, "either"],
+    "standard/computed-property-even-spacing": [2, "even"],
+
+    "promise/param-names": 0
+  }
+}

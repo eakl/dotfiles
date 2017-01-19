@@ -1,0 +1,64 @@
+# General
+.*
+.log
+
+# Git
+!.gitignore
+
+# Dot files
+.env
+!.bash_aliases
+!.bash_env
+!.bash_functions
+!.bash_profile
+!.bashrc
+!.condarc
+
+# Node / NPM
+node_modules
+npm-debug.log
+
+# Python
+pip-log.txt
+
+# OS generated files
+.DS_Store
+._*
+*~
+.Spotlight*
+.Trashes
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Vim
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Temporary files
+*.swp
+*.swo
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite

@@ -1,0 +1,11 @@
+[user]
+	name = AUTHORNAME
+	email = AUTHOREMAIL
+[github]
+	user = USERNAME
+[core]
+	editor = vim
+[color]
+	ui = auto
+[credential]
+  helper = GIT_CREDENTIAL_HELPER

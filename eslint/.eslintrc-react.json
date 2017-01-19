@@ -1,0 +1,21 @@
+{
+  "extends": ["standard", "standard-jsx"],
+
+  "plugin": [
+    "standard",
+    "react",
+    "promise"
+  ],
+
+  "rules": {
+
+    "standard/object-curly-even-spacing": [2, "either"],
+    "standard/array-bracket-even-spacing": [2, "either"],
+    "standard/computed-property-even-spacing": [2, "even"],
+
+    "promise/param-names": 0,
+
+    "react/prop-types": 0,
+    "react/display-name": 1
+  }
+}

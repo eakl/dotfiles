@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# added by Miniconda3 4.2.12 installer
+export PATH="$HOME/miniconda3/bin:$PATH"

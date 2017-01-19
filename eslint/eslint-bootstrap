@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+ESLINT_DIR="$( cd "$( dirname "${BASH_SOURCE}" )/../eslint" && pwd )"
+BIN_NAME=$( basename "$0" )
+COMMAND_NAME=$1
+ESLINT=".eslintrc.json"
+ESLINT_REACT=".eslintrc-react.json"
+
+sub_help() {
+  echo "Usage: $BIN_NAME <command>"
+  echo
+  echo "Commands:"
+  echo "   --help        This help message"
+  echo "   --std         Install Standard"
+  echo "   --react       Install React dependencies"
+  echo
+}
+
+sub_std() {
+  local SAME=$(cmp --silent "$ESLINT_DIR/$ESLINT" "$PWD/$ESLINT")
+
+  if [ ! -f "$PWD/$ESLINT" ] || [ ! $SAME ]; then
+    cp "$ESLINT_DIR/$ESLINT" "$PWD/$ESLINT" && success "'$ESLINT' has been copied." || fail "Copy of '$ESLINT' has failed.";
+  else
+    fail "'$ESLINT' already exists and has not changed (not copied)." 1>&2;
+    exit 1;
+  fi;
+
+  yarn \
+  add --dev \
+  eslint \
+  eslint-config-standard \
+  eslint-plugin-standard \
+  eslint-plugin-promise
+}
+
+sub_react() {
+  local SAME=$(cmp --silent "$ESLINT_DIR/$ESLINT_REACT" "$PWD/$ESLINT")
+
+  if [ ! -f "$PWD/$ESLINT" ] || [ ! $SAME ]; then
+    cp "$ESLINT_DIR/$ESLINT_REACT" "$PWD/$ESLINT" && success "'$ESLINT_REACT' has been copied." || fail "Copy of '$ESLINT_REACT' has failed.";
+  else
+    fail "'$ESLINT' already exists and has not changed (not copied)." 1>&2;
+    exit 1;
+  fi;
+
+  yarn \
+  add --dev \
+  eslint \
+  eslint-config-standard \
+  eslint-config-standard-jsx \
+  eslint-plugin-standard \
+  eslint-plugin-react \
+  eslint-plugin-promise
+}
+
+case $COMMAND_NAME in
+  "" | "-h" | "--help")
+    sub_help;
+    ;;
+  *)
+    CMD=${COMMAND_NAME/*-/}
+    sub_${CMD};
+    if [ $? = 127 ]; then
+      fail "'$CMD' is not a known command or has errors." >&2;
+      sub_help;
+      exit 1;
+    fi;
+    ;;
+esac

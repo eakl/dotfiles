@@ -1,0 +1,13 @@
+channels:
+  - defaults
+  - distributions
+
+create_default_packages:
+  - pip
+
+disallow:
+  - anaconda
+
+always_yes: False
+show_channel_urls: True
+changeps1: True

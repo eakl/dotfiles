@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -a
+
+# Locales
+LC_ALL="en_US.UTF-8"       # Prefer US English
+LANG="en_US"               # Use UTF-8
+
+# Folders
+DEV="$HOME/dev"
+CONFIG="$HOME/.config"
+
+set +a
