@@ -74,13 +74,8 @@ condac() {
   fi;
 }
 
-# Activate conda environment
 use() {
-  if [ "$#" -eq 0 ]; then
-    echo "You should specify an environment";
-  else
-    source activate "$1";
-  fi;
+  source activate "$(basename "$PWD")" || echo "No environment found.";
 }
 
 # Remove conda environement
@@ -117,7 +112,7 @@ condau() {
 # Create conda environment.yml file and autoenv activation file
 # based on directory name.
 conda-create-env() {
-  local AUTOENV=".env"
+  local AUTOENV=".autoenv"
   local CONDAENV="environment.yml"
   local FOLDERNAME=$(basename "$PWD")
 
@@ -128,34 +123,32 @@ conda-create-env() {
     echo "$CONDAENV already exists.";
   fi;
 
-  echo "Creating conda environment...";
-  [ -f "$CONDAENV" ] && conda env create;
-
-  echo "Activating the conda environment...";
-  source activate "$FOLDERNAME";
-
   if [ ! -f "$AUTOENV" ]; then
     printf "source activate ${FOLDERNAME}\n" > "$AUTOENV";
     echo "$AUTOENV created.";
   else
     echo "$AUTOENV already exists.";
   fi;
+
+  echo "Creating conda environment...";
+  conda env create || { echo "An error occured."; return 1; }
+
+  echo "Activating the conda environment...";
+  source activate "$FOLDERNAME";
 }
 
 conda-env-install() {
-  local AUTOENV=".env"
+  local AUTOENV=".autoenv"
   local CONDAENV="environment.yml"
   local FOLDERNAME=$(basename "$PWD")
 
   if [ ! -f "$CONDAENV" ]; then
     echo "'$CONDAENV' is missing";
+    exit 1;
   else
     echo "Installing environment from ${CONDAENV}...";
-    conda env create -f "$CONDAENV";
+    conda env create -f "$CONDAENV" || { echo "An error occured."; return 1; }
   fi;
-
-  echo "Activating the conda environment...";
-  source activate "$FOLDERNAME";
 
   if [ ! -f "$AUTOENV" ]; then
     printf "source activate ${FOLDERNAME}\n" > "$AUTOENV";
@@ -163,6 +156,9 @@ conda-env-install() {
   else
     echo "$AUTOENV already exists.";
   fi;
+
+  echo "Activating the conda environment...";
+  source activate "$FOLDERNAME";
 }
 
 conda-env-export() {
