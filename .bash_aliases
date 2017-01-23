@@ -40,7 +40,7 @@ alias c="clear"					                      # Clear Terminal display
 
 alias f="open -a Finder ./"			              # Opens current directory in MacOS Finder
 alias a="atom ."				                      # Opens current directory in Atom editor
-alias ipy='ipython notebook --port=9999'      # Launch IPython Notebook
+alias jupy='jupyter notebook --port 9999'      # Launch Jupyter Notebook
 
 # Git
 
