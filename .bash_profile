@@ -15,4 +15,3 @@ export AUTOENV_ENV_FILENAME=".autoenv"
 source "$(brew --prefix autoenv)/activate.sh"
 
 unset FILE
-unset AUTOENV_ENV_FILENAME
