@@ -51,6 +51,8 @@ sub_help() {
   echo -e "Commands:"
   echo -e "   --help          This help message"
   echo
+  echo -e "   --deploy        Deploy dot files"
+  echo
   echo -e "   --install       Apply install scripts"
   echo -e "      ${WHITE} - brew ${RESET}"
   echo -e "      ${WHITE} - atom ${RESET}"
@@ -65,9 +67,8 @@ sub_help() {
   echo -e "   --macos         Apply MacOS system preferences"
   echo -e "      ${WHITE} - defaults ${RESET}"
   echo
-  echo -e "   --deploy        Deploy dot files"
-  echo -e "   --update        Update packages and package managers (brew, npm)"
-  echo -e "   --clean         Clean up caches (brew, npm)"
+  echo -e "   --update        Update packages and package managers"
+  echo -e "   --clean         Clean up caches of package managers"
   echo
 }
 
@@ -153,6 +154,7 @@ sub_update() {
   brew upgrade
   npm install npm -g
   npm update -g
+  yarn upgrade
 }
 
 sub_clean() {
