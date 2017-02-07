@@ -2,9 +2,39 @@
 
 ESLINT_DIR="$( cd "$( dirname "${BASH_SOURCE}" )/../eslint" && pwd )"
 BIN_NAME=$( basename "$0" )
-COMMAND_NAME=$1
+COMMAND_NAME="$1"
 ESLINT=".eslintrc.json"
 ESLINT_REACT=".eslintrc-react.json"
+
+BOLD="\033[1m"
+RESET="\033[0m"
+
+WHITE="\033[1;37m"
+RED="\033[0;31m";
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+
+info() {
+  printf "\r[ ${YELLOW}!!${RESET} ] $1\n";
+}
+
+user() {
+  printf "\r[ ${BLUE}..${RESET} ] $1\n";
+}
+
+success() {
+  echo "";
+  printf "\r[ ${GREEN}OK${RESET} ] $1\n";
+  echo "";
+}
+
+fail() {
+  echo "";
+  printf "\r[${RED}FAIL${RESET}] $1\n";
+  echo "";
+  exit 1;
+}
 
 sub_help() {
   echo "Usage: $BIN_NAME <command>"
@@ -17,13 +47,11 @@ sub_help() {
 }
 
 sub_std() {
-  local SAME=$(cmp --silent "$ESLINT_DIR/$ESLINT" "$PWD/$ESLINT")
 
-  if [ ! -f "$PWD/$ESLINT" ] || [ ! $SAME ]; then
-    cp "$ESLINT_DIR/$ESLINT" "$PWD/$ESLINT" && success "'$ESLINT' has been copied." || fail "Copy of '$ESLINT' has failed.";
+  if [ ! -f "${PWD}/${ESLINT}" ] || ! cmp --silent "${ESLINT_DIR}/${ESLINT}" "${PWD}/${ESLINT}"; then
+    cp "${ESLINT_DIR}/${ESLINT}" "${PWD}/${ESLINT}" && success "'$ESLINT' has been copied." || fail "Copy of '$ESLINT' has failed.";
   else
-    fail "'$ESLINT' already exists and has not changed (not copied)." 1>&2;
-    exit 1;
+    fail "'$ESLINT' already exists and has not changed (not copied).";
   fi;
 
   yarn \
@@ -35,13 +63,11 @@ sub_std() {
 }
 
 sub_react() {
-  local SAME=$(cmp --silent "$ESLINT_DIR/$ESLINT_REACT" "$PWD/$ESLINT")
 
-  if [ ! -f "$PWD/$ESLINT" ] || [ ! $SAME ]; then
-    cp "$ESLINT_DIR/$ESLINT_REACT" "$PWD/$ESLINT" && success "'$ESLINT_REACT' has been copied." || fail "Copy of '$ESLINT_REACT' has failed.";
+  if [ ! -f "${PWD}/${ESLINT}" ] || ! cmp --silent "${ESLINT_DIR}/${ESLINT_REACT}" "${PWD}/${ESLINT}"; then
+    cp "${ESLINT_DIR}/${ESLINT_REACT}" "${PWD}/${ESLINT}" && success "'$ESLINT_REACT' has been copied." || fail "Copy of '$ESLINT_REACT' has failed.";
   else
-    fail "'$ESLINT' already exists and has not changed (not copied)." 1>&2;
-    exit 1;
+    fail "'$ESLINT' already exists and has not changed (not copied).";
   fi;
 
   yarn \
@@ -60,11 +86,9 @@ case $COMMAND_NAME in
     ;;
   *)
     CMD=${COMMAND_NAME/*-/}
-    sub_${CMD};
+    sub_${CMD} 2>/dev/null;
     if [ $? = 127 ]; then
       fail "'$CMD' is not a known command or has errors." >&2;
-      sub_help;
-      exit 1;
     fi;
     ;;
 esac
