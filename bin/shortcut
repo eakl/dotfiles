@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+BIN_NAME=$( basename "$0" )
+COMMAND_NAME="$1"
+
+set -a
+
+BOLD="\033[1m"
+RESET="\033[0m"
+
+WHITE="\033[1;37m"
+RED="\033[0;31m";
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+
+set +a
+
+fail() {
+  echo "";
+  printf "\r[${RED}FAIL${RESET}] $1\n";
+  echo "";
+  exit 1;
+}
+
+sub_shortcut() {
+  echo -e "Usage: $BIN_NAME"
+  echo
+  echo -e "  ${WHITE} FOLDER & FILE ${RESET}"
+  echo -e "       mkcd <DIR>                mkdir <DIR> & cd <DIR>"
+  echo -e "       ff <REGEX>                Find a file given a <REGEX>"
+  echo -e "       fd <REGEX>                Find a directory given a <REGEX>"
+  echo -e "       extract <ARCHIVE>         Extract an archive"
+  echo
+  echo -e "  ${WHITE} GIT ${RESET}"
+  echo -e "       gs                        git status"
+  echo -e "       ga <empty> | <FILE...>    git add <.> | <FILE...>"
+  echo -e "       gr <empty> | <FILE...>    git reset HEAD -- {all} | <FILE...>"
+  echo -e "       gc '<MSG>'                git commit -m '<MSG>'"
+  echo -e "       gl                        git log --oneline"
+  echo -e "       gp                        git push"
+  echo
+  echo -e "  ${WHITE} APPS ${RESET}"
+  echo -e "       jupy                      Launch Jupyter notebook"
+  echo
+  echo -e "  ${WHITE} CONDA ${RESET}"
+  echo -e "       condal                    Lists packages installed in the current environments"
+  echo -e "       condael                   Lists conda environments"
+  echo -e "       condac <ENV>              Creates the conda environment <ENV>"
+  echo -e "       use                       Activates the folder's conda environment"
+  echo -e "       duse                      Desactivates the current conda environment"
+  echo -e "       condar                    Deletes the conda environment <ENV>"
+  echo -e "       condai <PKG...>           Installs the conda packages <PKG...>"
+  echo -e "       condau <PKG...>           Updates the conda packages <PKG...>"
+  echo -e "       conda-env-create          Creates a conda environment in a folder"
+  echo -e "       conda-env-install         Installs a conda environment based on 'environment.yml'"
+  echo -e "       conda-env-export          Exports the conda environment in 'environment.yml'"
+  echo
+  echo -e "  ${WHITE} ESLINT ${RESET}"
+  echo -e "       linty                     Installs ESLint & rules in the current directory"
+  echo
+}
+
+case $COMMAND_NAME in
+  "")
+    sub_shortcut;
+    ;;
+  *)
+    fail "No arguments allowed." 1>&2;
+    ;;
+esac;
