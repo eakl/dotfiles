@@ -7,6 +7,7 @@ pkgs=(
   linter
   linter-eslint
   language-babel
+  # linter-pylint
 )
 
 apm install "${pkgs[@]}"

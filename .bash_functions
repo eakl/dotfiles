@@ -20,6 +20,7 @@ fd() { find . -type d -iname "*$1*"; }      # Find directory
 
 ##### File
 
+# Extracts an archive
 extract() {
   if [ -f "$1" ]; then
     case "$1" in
@@ -93,8 +94,11 @@ condai() {
     echo "You should specify a package";
   else
     echo "Installing packages...";
-    conda install "$1";
-    conda-env-export;
+    if conda install "$@"; then
+      conda-env-export;
+    else
+      echo "Error installing packages.";
+    fi;
   fi;
 }
 
@@ -104,14 +108,17 @@ condau() {
     echo "You should specify a package";
   else
     echo "Updating packages...";
-    conda update "$1";
-    conda-env-export;
+    if conda update "$@"; then
+      conda-env-export;
+    else
+      echo "Error updating packages.";
+    fi;
   fi;
 }
 
 # Create conda environment.yml file and autoenv activation file
 # based on directory name.
-conda-create-env() {
+conda-env-create() {
   local AUTOENV=".autoenv"
   local CONDAENV="environment.yml"
   local FOLDERNAME=$(basename "$PWD")

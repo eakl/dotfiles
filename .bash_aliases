@@ -47,6 +47,7 @@ alias jupy='jupyter notebook --port 9999'      # Launch Jupyter Notebook
 alias gs="git status"
 alias gl='git log --oneline'
 alias gp='git push'
+alias gr='git reset HEAD --'
 
 # Conda
 
@@ -59,6 +60,7 @@ alias duse='source deactivate'
 # ------- Script
 
 alias linty="$DEV/dotfiles/eslint/eslint-bootstrap"
+alias shortcut="$DEV/dotfiles/bin/shortcut"
 
 # # Empty the Trash on all mounted volumes and the main HDD.
 # # Also, clear Apple’s System Logs to improve shell startup speed.
