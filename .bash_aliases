@@ -53,6 +53,7 @@ alias gr='git reset HEAD --'
 
 alias condal='conda list'
 alias condael='conda env list'
+alias condas='conda search'
 alias duse='source deactivate'
 
 # Script

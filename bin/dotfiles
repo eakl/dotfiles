@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-export DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE}" )/.." && pwd )"
-BIN_NAME=$( basename "$0" )
+export DOTFILES_DIR="$( cd "$( dirname "$BASH_SOURCE" )/.." && pwd )"
+BIN_NAME="$( basename "$0" )"
 COMMAND_NAME="$1"
 shift
-ARG_NAME=("$@")
+ARG_NAME=("$@") # list of args
 
 set -a
 
@@ -150,18 +150,35 @@ sub_deploy() {
 }
 
 sub_update() {
-  brew update
-  brew upgrade
-  npm install npm -g
-  npm update -g
-  yarn upgrade
+  echo "brew"
+  echo "  brew update"
+  echo "  brew upgrade"
+  echo
+  echo "npm"
+  echo "  npm install npm -g"
+  echo "  npm update -g"
+  echo
+  echo "yarn"
+  echo "  yarn upgrade"
 }
 
 sub_clean() {
-  brew cleanup
-  brew cask cleanup
-  npm cache clean
-  yarn cache clean
+  echo "brew"
+  echo "  brew cleanup -s"
+  echo "  brew cask cleanup -s"
+  echo
+  echo "npm"
+  echo "  npm cache clean"
+  echo
+  echo "yarn"
+  echo "  yarn cache clean"
+  echo
+  echo "conda"
+  echo "  conda clean --index-cache --dry-run"
+  echo "  conda clean --lock --dry-run"
+  echo "  conda clean --source-cache --dry-run"
+  echo "  conda clean --tarballs --dry-run"
+  echo "  conda clean --packages --dry-run"
 }
 
 case $COMMAND_NAME in
