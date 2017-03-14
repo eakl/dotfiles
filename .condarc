@@ -9,6 +9,6 @@ create_default_packages:
 disallow:
   - anaconda
 
-always_yes: False
-show_channel_urls: True
-changeps1: True
+show_channel_urls: true
+# always_yes: false
+changeps1: true

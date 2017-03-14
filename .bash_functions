@@ -95,7 +95,7 @@ condai() {
   else
     echo "Installing packages...";
     if conda install "$@"; then
-      conda-env-export;
+      echo "Packages installed. Use conda-env-export to export the environment";
     else
       echo "Error installing packages.";
     fi;
@@ -109,7 +109,7 @@ condau() {
   else
     echo "Updating packages...";
     if conda update "$@"; then
-      conda-env-export;
+      echo "Packages updated. Use conda-env-export to export the environment";
     else
       echo "Error updating packages.";
     fi;
@@ -135,6 +135,7 @@ conda-env-create() {
   local FOLDER_NAME="$( basename "$PWD" )"
   local CONDA_ENV="environment.yml"
   local PY_VERSION=""
+  local IS_PY_VERSION=""
 
   # Define Python version
   if [ "$#" -gt 1 ]; then
@@ -142,11 +143,12 @@ conda-env-create() {
     return 1;
   elif [ "$#" -eq 1 ] && [[ "$1" =~ ^([[:digit:]]+\.)*([[:digit:]]+)$ ]]; then
     PY_VERSION="=$1"
+    IS_PY_VERSION=" with python $1"
   fi;
 
   # Create environment file
   printf "name: ${FOLDER_NAME}\ndependencies:\n- python${PY_VERSION}\n- pip\n" > "$CONDA_ENV";
-  echo "$CONDA_ENV created. Use conda-env-install to install";
+  echo "$CONDA_ENV created${IS_PY_VERSION}. Use conda-env-install to install";
 }
 
 # Install conda environment based on environment.yml file and optional pip dependencies
@@ -166,8 +168,8 @@ conda-env-install() {
   fi;
 
   # Activate environment
-  echo "Activating $FOLDER_NAME environment...";
-  source activate "$FOLDER_NAME"
+  echo "Activating ${FOLDER_NAME} environment...";
+  source activate "${FOLDER_NAME}"
 
   # Install pip dependencies
   if [ ! -f "$PIP_DEPS" ]; then
@@ -183,7 +185,9 @@ conda-env-install() {
 
 conda-env-export() {
   local CONDA_ENV="environment.yml"
-  local PIP_DEPS="requirements.txt"
+  local DEPENDENCIES=""
+  local PIP_LINE="- pip:"
+  local PREFIX_LINE="prefix: /path/to/my-env"
 
   read -p "Export environment to ${CONDA_ENV}? (y/n [n]) ";
 
@@ -193,19 +197,33 @@ conda-env-export() {
       echo "Backup: ${CONDA_ENV} -> ${CONDA_ENV}.bak";
 
       # Export conda environment
-      if conda env export | sed -E 's|^(prefix:) .*|\1 /path/to/my-env|' > "$CONDA_ENV"; then
+      # 1) Remove prefix line
+      # 2) Remove last \n
+      if conda env export | sed -E -e '/^prefix:.*$/d' -e '/^$/d' > "$CONDA_ENV"; then
         echo "Environment exported";
       else
         echo "Failed to export environment";
       fi;
 
       # Export pip dependencies
-      if conda list | awk 'BEGIN { FS=" "; OFS="=" } $1 !~ /^#/ && $4 !~ /./ { print $1,$2 }' > "$PIP_DEPS"; then
-        echo "pip dependencies exported";
+      if DEPENDENCIES="$( conda list | awk 'BEGIN { FS=" "; OFS="=="; }
+      $3 ~ /<pip>/ { print "    - "$1,$2 }' )"; then
+
+        # 1) Print number of dependencies
+        # 2) If dependencies exist, append them in CONDA_ENV
+        if [ "$( printf "$DEPENDENCIES" | wc -l )" -gt 0 ]; then
+          printf "%s\n${DEPENDENCIES}\n" "$PIP_LINE" >> "$CONDA_ENV";
+          echo "pip dependencies exported";
+        else
+          echo "no pip dependencies to export";
+        fi;
+
+        # Add Prefix line at the bottom
+        printf "${PREFIX_LINE}\n" >> "$CONDA_ENV"
+
       else
         echo "Failed to export pip dependencies";
       fi;
-
     else
       echo "Failed to backup ${CONDA_ENV}. Export aborted";
     fi;

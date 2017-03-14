@@ -46,6 +46,7 @@ sub_shortcut() {
   echo -e "  ${WHITE} CONDA ${RESET}"
   echo -e "     condael                     Lists conda environments"
   echo -e "     condal                      Lists packages installed in the current environment"
+  echo -e "     condas <PKG>                Searches the conda package <PKG>"
   echo -e "     condac <ENV>                Creates the conda environment <ENV>"
   echo -e "     condar <ENV>                Deletes the conda environment <ENV>"
   echo -e "     condai <PKG...>             Installs the conda packages <PKG...>"
@@ -55,7 +56,7 @@ sub_shortcut() {
   echo -e "     autoenv-create              Creates an .autoenv file"
   echo -e "     conda-env-create [<VER>]    Creates an 'environment.yml' file given an (optional) Python version"
   echo -e "     conda-env-install           Installs environment from 'environment.yml' and 'requirements.txt'"
-  echo -e "     conda-env-export            Exports environment in 'environment.yml' and 'requirements.txt'"
+  echo -e "     conda-env-export            Exports environment in 'environment.yml'"
   echo
   echo -e "  ${WHITE} ESLINT ${RESET}"
   echo -e "     linty                       Installs ESLint & rules in the current directory"
