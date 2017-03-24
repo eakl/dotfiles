@@ -22,6 +22,8 @@ apps=(
   rmtrash
   python3
   autoenv
+  awscli
+  tmux
 )
 
 brew install "${apps[@]}"

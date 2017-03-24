@@ -24,7 +24,7 @@ info() {
 }
 
 user() {
-  printf "\r[ ${BLUE}..${RESET} ] $1\n";
+  printf "\r[ ${BLUE}..${RESET} ] $1";
 }
 
 success() {
@@ -73,26 +73,34 @@ sub_help() {
 }
 
 sub_install() {
-	info "${YELLOW}This may overwrite existing files in your computer. Are you sure? (y/n)${RESET}";
-  read -n 1;
-	echo "";
+	info "${YELLOW}This may overwrite existing files in your computer.${RESET}";
+  user "Are you sure? (y/n [n]) ";
+  read
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-    for ARG in ${ARG_NAME[@]}; do
-      local SCRIPT="${DOTFILES_DIR}/install/${ARG}.sh";
-      [ -f "$SCRIPT" ] && echo "Applying '$ARG'" && . "$SCRIPT" || fail "Unable to find script '$ARG'";
-    done;
+    if [ -n "$ARG_NAME" ]; then
+      for ARG in ${ARG_NAME[@]}; do
+        local SCRIPT="${DOTFILES_DIR}/install/${ARG}.sh";
+        [ -f "$SCRIPT" ] && echo "Applying '$ARG'" && . "$SCRIPT" || fail "Unable to find script '$ARG'";
+      done;
+    else
+      fail "No script provided";
+    fi;
 	fi;
 }
 
 sub_setup() {
-  info "${YELLOW}This may overwrite existing files in your computer. Are you sure? (y/n)${RESET}";
-  read -n 1;
-	echo "";
+  info "${YELLOW}This may overwrite existing files in your computer.${RESET}";
+  user "Are you sure? (y/n [n]) ";
+  read
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-    for ARG in ${ARG_NAME[@]}; do
-      local SCRIPT="${DOTFILES_DIR}/setup/${ARG}.sh";
-      [ -f "$SCRIPT" ] && echo "Applying '$ARG'" && . "$SCRIPT" || fail "Unable to find script '$ARG'";
-    done;
+    if [ -n "$ARG_NAME" ]; then
+      for ARG in ${ARG_NAME[@]}; do
+        local SCRIPT="${DOTFILES_DIR}/setup/${ARG}.sh";
+        [ -f "$SCRIPT" ] && echo "Applying '$ARG'" && . "$SCRIPT" || fail "Unable to find script '$ARG'";
+      done;
+    else
+      fail "No sript provided";
+    fi;
   fi;
 }
 
@@ -103,21 +111,24 @@ sub_macos() {
 syncDF() {
 
   if rsync \
-  --exclude ".git/" \
-  --exclude "bin/" \
-  --exclude "credentials/" \
-  --exclude "eslint/" \
-  --exclude "git/" \
-  --exclude "install/" \
-  --exclude "macos/" \
-  --exclude "setup/" \
-  --exclude "theme/" \
-  --exclude ".gitignore" \
-  --exclude ".DS_Store" \
-  --exclude "README.md" \
-  -avh --no-perms "${DOTFILES_DIR}/." $HOME; then
-    source "${HOME}/.bash_profile";
+  --include=".bash_aliases" \
+  --include=".bash_functions" \
+  --include=".bash_profile" \
+  --include=".bashrc" \
+  --include=".condarc" \
+  --include=".gitconfig" \
+  --include=".vimrc" \
+  --include=".env" \
+  --exclude="*" \
+  -avh --no-perms "${DOTFILES_DIR}/" "${HOME}/"; then
+    source "${HOME}/.bash_profile" || fail "Unable to reload .bash_profile";
     success "dot files have been deployed successfully.";
+
+    if chmod u=rw,go= "${HOME}/.env"; then
+      success ".env file CHMODed successfully";
+    else
+      fail ".env file has not been CHMODed";
+    fi;
   else
     fail "dot files have not been deployed."
   fi;
@@ -130,18 +141,18 @@ sub_deploy() {
   	syncDF;
   else
     if [ ! -f "${DOTFILES_DIR}/${ENV_FILE}" ]; then
-      info "${YELLOW}'$ENV_FILE' is missing. Do you want to proceed anyway? (y/n)${RESET}";
-      read -n 1;
-      echo "";
+      info "${YELLOW}'$ENV_FILE' is missing.${RESET}";
+      user "Do you want to proceed anyway? (y/n [n]) ";
+      read
       if [[ $REPLY =~ ^[Yy]$ ]]; then
         syncDF;
       else
         fail "Aborted: dot files have not been deployed.";
       fi;
     else
-      info "${YELLOW}This may overwrite existing files in your home directory. Are you sure? (y/n)${RESET}";
-      read -n 1;
-      echo "";
+      info "${YELLOW}This may overwrite existing files in your home directory.${RESET}";
+      user " Are you sure? (y/n [n]) ";
+      read
       if [[ $REPLY =~ ^[Yy]$ ]]; then
         syncDF;
       fi;

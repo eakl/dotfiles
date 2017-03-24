@@ -3,9 +3,9 @@
 PIP_DIR="${HOME}/.pip"
 PIP_FILE="pip.conf"
 
-info "This will create a configuration file (${PIP_FILE}) in ${PIP_DIR}/. Are you sure? (y/n)";
-read -n 1;
-echo "";
+info "This will create a configuration file (${PIP_FILE}) in ${PIP_DIR}/";
+user "Are you sure? (y/n [n]) ";
+read
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   [ ! -d "$PIP_DIR" ] && echo "Creating ${PIP_DIR}..." && mkdir -p "$PIP_DIR";
 

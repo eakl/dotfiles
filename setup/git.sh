@@ -13,11 +13,11 @@ else
 
   [ "$(uname -s)" == "Darwin" ] && GIT_CREDENTIAL="osxkeychain";
 
-  user "- What is your GitHub author name?";
+  user "- GitHub author name: ";
   read GIT_AUTHORNAME;
-  user "- What is your GitHub author email?";
+  user "- GitHub author email: ";
   read GIT_AUTHOREMAIL;
-  user "- What is your GitHub username?";
+  user "- GitHub username: ";
   read GIT_USERNAME;
 
   if sed -e "s/AUTHORNAME/${GIT_AUTHORNAME}/g" \
