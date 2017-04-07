@@ -5,6 +5,7 @@ channels:
 
 create_default_packages:
   - pip
+  - numpy
 
 disallow:
   - anaconda

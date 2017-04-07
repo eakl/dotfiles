@@ -5,7 +5,7 @@ MONGO_FILE='mongod.conf'
 
 info "This will create a symlink for $MONGO_FILE in ${MONGO_DIR}/";
 user "Are you sure? (y/n [n]) ";
-read
+read;
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   [ ! -d "$MONGO_DIR" ] && mkdir -p "$MONGO_DIR";
 

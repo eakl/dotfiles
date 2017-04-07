@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ESLINT_DIR="$( cd "$( dirname "${BASH_SOURCE}" )/../eslint" && pwd )"
+ESLINT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../eslint" && pwd )"
 BIN_NAME=$( basename "$0" )
 COMMAND_NAME="$1"
 ESLINT=".eslintrc.json"

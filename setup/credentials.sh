@@ -9,7 +9,7 @@ google() {
 
   info "This will copy '${GOOGLE_FILE}' to '${GOOGLE_CONFIG_DIR}/'";
   user "Are you sure? (y/n [n]) ";
-  read
+  read;
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     if rsync \
     --include="google*" \
@@ -30,7 +30,7 @@ aws() {
 
   info "This will copy '${AWS_CONFIG_FILE}' and '${AWS_CREDENTIALS_FILE}' to '${AWS_CONFIG_DIR}/'";
   user "Are you sure? (y/n [n]) ";
-  read
+  read;
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     if rsync \
     --include="aws*" \
@@ -48,7 +48,7 @@ echo -e "        ${WHITE} google ${RESET}"
 echo -e "        ${WHITE} aws ${RESET}"
 echo
 echo -n "Apply: "
-read CRED
+read CRED;
 echo
 
 case $CRED in
