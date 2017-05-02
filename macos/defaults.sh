@@ -193,7 +193,7 @@ EOD
 # i.e. hover over a window and start typing in it without clicking first
 defaults write com.apple.terminal FocusFollowsMouse -bool true
 
-# Disable the annoying line marks
+# Disable the annoying line marks '['
 defaults write com.apple.Terminal ShowLineMarks -int 0
 
 # ------------
