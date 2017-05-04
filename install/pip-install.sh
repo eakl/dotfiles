@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-# Install Pip Packages for 'learn-nlp' environment
+# Pip Packages
 ## pip install pylint

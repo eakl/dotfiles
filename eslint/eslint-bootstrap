@@ -41,9 +41,15 @@ sub_help() {
   echo
   echo "Commands:"
   echo "   --help        This help message"
+  echo "   --init        Initialize project"
   echo "   --std         Install Standard"
   echo "   --react       Install React dependencies"
   echo
+}
+
+sub_init() {
+  user "Initializing JS project...";
+  yarn init
 }
 
 sub_std() {

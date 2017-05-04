@@ -10,7 +10,7 @@ export LANG="en_US"               # Use UTF-8
 export DEV="$HOME/dev"
 export CONFIG="$HOME/.config"
 
-# added by Miniconda3 4.2.12 installer
+# added by Miniconda3 4.3.11 installer
 export PATH="$HOME/miniconda3/bin:$PATH"
 
 # --------------------------------------------------

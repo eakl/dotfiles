@@ -47,7 +47,7 @@ alias jupy='jupyter notebook --port 9999'      # Launch Jupyter Notebook
 alias gs="git status"
 alias gl='git log --oneline'
 alias gp='git push'
-alias gr='git reset HEAD --'
+alias gu='git reset HEAD --'
 
 # Conda
 

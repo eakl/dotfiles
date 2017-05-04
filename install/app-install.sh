@@ -13,7 +13,6 @@
 # Sequel Pro
 # Robomongo
 # Deluge (blocklist: ttp://john.bitsurge.net/public/biglist.p2p.gz)
-# FUSE + SSHFS (https://osxfuse.github.io/)
 #
 # Miniconda
 #
