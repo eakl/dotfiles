@@ -5,9 +5,10 @@ CREDENTIALS_DIR="${DOTFILES_DIR}/credentials"
 google() {
   # Google
   local GOOGLE_CONFIG_DIR="$CONFIG/google"
-  local GOOGLE_FILE="google-api-credentials.json"
+  local GOOGLE_ANALYTICS_FILE="google-analytics-credentials.json"
+  local GOOGLE_SPREADSHEET_FILE="google-spreadsheet-credentials.json"
 
-  info "This will copy '${GOOGLE_FILE}' to '${GOOGLE_CONFIG_DIR}/'";
+  info "This will copy '${GOOGLE_ANALYTICS_FILE}' and '${GOOGLE_SPREADSHEET_FILE}' to '${GOOGLE_CONFIG_DIR}/'";
   user "Are you sure? (y/n [n]) ";
   read;
   if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -15,9 +16,9 @@ google() {
     --include="google*" \
     --exclude="*" \
     -avh --chmod=u=rwX,go= "${CREDENTIALS_DIR}/" "${GOOGLE_CONFIG_DIR}/"; then
-      success "'${GOOGLE_FILE}' has been copied and CHMODed successfully";
+      success "Google credentials have been copied and CHMODed successfully";
     else
-      fail "'${GOOGLE_FILE}' has not been copied";
+      fail "Google credentials have not been copied";
     fi;
   fi;
 }
