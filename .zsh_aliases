@@ -1,0 +1,50 @@
+#!/usr/bin/env zsh
+
+# Add security
+alias sudo="sudo "                              # sudo: 	Take into account aliases with 'sudo'
+alias del="trash"				                # del: 		DO NOT USE 'rm' | 'del' is safer
+
+# Directory
+alias home="cd ~"				                # Go Home
+alias dev="cd $DEV"                             # Got to the dev folder
+alias ..="cd ../"				                # Go back 1 directory level
+alias ...="cd ../../"				            # Go back 2 directory level
+alias ....="cd ../../../"			            # Go back 3 directory level
+alias -- --="cd -"                              # Go to previous dir with -
+
+alias ll="ls -AFGlhp"				            # Preferred 'ls' implementation
+alias mkdir="mkdir -p"				            # Preferred 'mkdir' implementation
+
+# File
+alias cp="cp -iv"				                # Preferred 'cp' implementation
+alias mv="mv -iv"				                # Preferred 'mv' implementation
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -exec /bin/rm {} \;"
+
+# Console
+alias c="clear"					                # Clear Terminal display
+
+# Application
+alias f="open -a Finder ./"			            # Opens current directory in MacOS Finder
+alias jupy='jupyter notebook --port 9999'       # Launch Jupyter Notebook
+
+# Git
+alias gs="git status"
+alias gl='git log --oneline'
+alias gp='git push'
+alias gu='git reset HEAD --'
+
+# Conda
+alias condal='conda list'
+alias condael='conda env list'
+alias condas='conda search'
+alias duse='source deactivate'
+
+# Script
+alias shortcut="$DEV/dotfiles/bin/shortcut"
+
+# # Empty the Trash on all mounted volumes and the main HDD.
+# # Also, clear Apple’s System Logs to improve shell startup speed.
+# # Finally, clear download history from quarantine. https://mths.be/bum
+# alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"

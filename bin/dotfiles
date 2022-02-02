@@ -121,7 +121,7 @@ syncDF() {
   --include=".env" \
   --exclude="*" \
   -avh --no-perms "${DOTFILES_DIR}/" "${HOME}/"; then
-    source "${HOME}/.bash_profile" || fail "Unable to reload .bash_profile";
+    source "${HOME}/.zprofile" || fail "Unable to reload .zprofile";
     success "dot files have been deployed successfully.";
 
     if chmod u=rw,go= "${HOME}/.env"; then
